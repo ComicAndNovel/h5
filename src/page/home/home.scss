@@ -1,0 +1,25 @@
+@import '../../assets/css/mixins.scss';
+@import '../../assets/css/var.scss';
+
+.b-index-container {
+  box-sizing: border-box;
+
+  .b-grid-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: var(--b-container-margin);
+    font-size: 14px;
+    
+    .van-space {
+      display: grid;
+      grid-template-rows: 162px auto;
+    }
+
+    span {
+      @include ellipse(2);
+      line-height: 20px;
+      margin-top: 5px;
+    }
+  }
+}
