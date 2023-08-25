@@ -7,19 +7,28 @@
   .b-grid-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    // grid-template-rows: 170px;
+    gap: 15px;
     margin: var(--b-container-margin);
-    font-size: 14px;
+    font-size: 12px;
+
+    .b-grid-list-item {
+      .novel-poster {
+        width: 100%;
+        height: 145px;
+        background: rgba(62, 55, 55, 0.08);
+      }
+      
+    }
     
     .van-space {
       display: grid;
-      grid-template-rows: 162px auto;
+      // grid-template-rows: 162px auto;
     }
 
     span {
       @include ellipse(2);
       line-height: 20px;
-      margin-top: 5px;
     }
   }
 }

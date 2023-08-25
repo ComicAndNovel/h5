@@ -20,7 +20,8 @@ export default defineComponent({
         url: '/novel/novelList',
         method: 'post',
         data: {
-          page: page        
+          page: page,
+          pageSize: 10        
         }
       }).then((res) => {
           if (page === 1) {
@@ -74,10 +75,13 @@ export default defineComponent({
                   data.value.map((item, index) => {
                     return (
                       <li key={index} class="b-grid-list-item" onClick={() => {
-                        // router.push(`/bangumiDetail?id=${item.id}`)
+                        router.push(`/reader?id=${item.id}`)
                       }}>
-                        <Space direction="vertical">
-                          <Image src={item.cover} radius={4}></Image>
+                        <Space direction="vertical" size={0}>
+                          <Image 
+                            src={item.cover} 
+                            radius={4}
+                            class="novel-poster"></Image>
                           <span>{item.name}</span>
                         </Space>
                       </li>
