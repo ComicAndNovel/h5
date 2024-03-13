@@ -3,10 +3,11 @@ import axios, { AxiosRequestHeaders } from 'axios'
 // import { useRouter } from 'vue-router'
 import status from './status'
 import { BASE_URL } from '../config'
+import { toCamelCase } from '../utils'
 
 const http = axios.create({
   baseURL: BASE_URL,
-  timeout: 10 * 1000,
+  timeout: 100 * 1000,
   // withCredentials: true
 })
 
@@ -33,7 +34,7 @@ http.interceptors.request.use(config => {
 http.interceptors.response.use(res => {
   // 对响应数据做点什么
   if (res.status === 200 && res.data.code === 200) {
-    return res.data
+    return toCamelCase(res.data)
   } else {
     showToast(res.data.message)
     return Promise.reject(res.data)

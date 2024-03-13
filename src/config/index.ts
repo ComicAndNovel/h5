@@ -1,5 +1,7 @@
 const API_URL = {
-  development: 'http://192.168.1.2:8080/api',
+  // development: 'http://169.254.163.222:8080/api',
+  // development: 'http://192.168.100.24:8080/api',/
+  development: 'http://localhost:3000/api',
   production: ''
 }
 

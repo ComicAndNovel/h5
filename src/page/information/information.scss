@@ -1,0 +1,28 @@
+.books-information-container {
+  padding: 20px;
+  .information {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    li {
+      display: inline-flex;
+      // align-items: center;
+      line-height: 20px;
+      .label {
+        flex: 0 0 70px;
+        text-align: right;
+      }
+      span {
+        display: inline-block;
+        font-size: 14px;
+      }
+      .van-tag {
+        padding: 4px 12px;
+        font-size: 14px;
+      }
+    }
+    .desc {
+      align-items: flex-start;
+    }
+  }
+}

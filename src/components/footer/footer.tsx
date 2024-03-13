@@ -1,29 +1,21 @@
 import { defineComponent, Fragment } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import homeSvg from '../../assets/icons/home.svg'
-import classSvg from '../../assets/icons/class.svg'
-import mySvg from '../../assets/icons/my.svg'
-import homeSelectSvg from '../../assets/icons/home-selected.svg'
-import classSelectSvg from '../../assets/icons/class-selected.svg'
-import mySelectSvg from '../../assets/icons/my-selected.svg'
 import './footer.scss'
 
 
 const icon = [
   {
     router: '/',
-    icon: homeSvg,
-    selected: homeSelectSvg
+    name: '我的'
   },
   {
     router: '/index',
-    icon: classSvg,
-    selected: classSelectSvg
+    name: '书架'
+
   },
   {
     router: '/my',
-    icon: mySvg,
-    selected: mySelectSvg
+    name: '我的'
   },
 ]
 export default defineComponent({
@@ -41,7 +33,7 @@ export default defineComponent({
                   <li key={index} class="b-grid-list-item" onClick={() => {
                     router.push(item.router)
                   }}>
-                    <img src={route.path === item.router ? item.selected : item.icon as string}></img>
+                    <span>{item.name}</span>
                   </li>
                 )
               })

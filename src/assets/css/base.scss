@@ -1,0 +1,10 @@
+.column-space-between {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.van-tag {
+  padding: 4px 12px;
+  font-size: 14px;
+}

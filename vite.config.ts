@@ -14,6 +14,7 @@ export default defineConfig({
     })
   ],
   server: {
+    host: '0.0.0.0',
     proxy: {
       // 带选项写法：http://localhost:5173/api/bar -> http://jsonplaceholder.typicode.com/bar
       '/api': {
