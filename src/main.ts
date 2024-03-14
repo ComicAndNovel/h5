@@ -10,7 +10,6 @@ import './assets/css/normalize.scss'
 //@ts-ignore
 import App from './App.tsx'
 
-
 const router = createRouter({
   history: createWebHistory(),
   routes: routes

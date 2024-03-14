@@ -1,0 +1,130 @@
+@import '../../assets/css/mixins.scss';
+
+// 解决小说内的样式，小说内margin左右两边有1px空白
+body {
+  margin: 0 !important;
+}
+
+.books-reader-header {
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  li {
+    font-size: 18px;
+  }
+
+  .header-title {
+    // font
+    padding: 0 20px;
+    @include ellipse(1)
+  }
+  
+}
+.header-action-setting {
+  // width: 200px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  ul {
+    display: flex;
+    gap: 10px;
+    li {
+      width: 60px;
+      height: 30px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+  }
+}
+
+.reader-container {
+  height: calc(100vh - 0px);
+}
+
+.comic-reader {
+  width: calc(100% - 0px);
+  height: calc(100% - 0px);
+  overflow: auto;
+  box-sizing: border-box;
+  display: grid;
+  align-content: center;
+  text-align: center;
+  color: white;
+  .books-center {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .last-comic-page {
+    color: white;
+  }
+}
+.book-container {
+  height: calc(100vh - 0px);
+  overflow: auto;
+  display: grid;
+  align-content: center;
+  text-align: center;
+  .book {
+    width: calc(100% - 0px);
+    height: calc(100% - 0px);
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  .books-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: black;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+.b-reader-footer {
+  width: 100%;
+  height: 60px;
+}
+.b-reader-footer ul {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 100%;
+  border-top: 1px solid rgb(70 66 59 / 11%);
+  box-sizing: border-box;
+  
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-right: 1px solid rgb(70 66 59 / 11%);
+    &:nth-last-of-type(1) {
+      border-right: none;
+    }
+  }
+}
+.toc-container {
+  padding: 20px;
+}

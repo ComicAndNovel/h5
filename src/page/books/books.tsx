@@ -39,9 +39,7 @@ export default defineComponent({
           if (refreshing.value) {
             refreshing.value = false
           }
-          console.log('======')
           loading.value = false
-          // finished.value = false
         })
     }
 
@@ -55,7 +53,6 @@ export default defineComponent({
       refreshing.value = true
       getData()
     }
-    getData()
 
     return () => {
       return (
@@ -97,5 +94,5 @@ export default defineComponent({
         </Container>
       )
     }
-  },
+  }
 })
