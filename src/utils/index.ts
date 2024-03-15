@@ -34,3 +34,13 @@ export function toCamelCase(input: any): any {
 
   return input
 }
+
+export function repeat (arr: any[], count: number) {
+  const result: any[] = []
+
+  for (let i = 0; i < count; i++) {
+    result.push(...arr)
+  }
+
+  return result
+}

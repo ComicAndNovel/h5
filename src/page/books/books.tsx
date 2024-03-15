@@ -1,23 +1,48 @@
 import {defineComponent, reactive, ref} from 'vue'
 import {useRouter} from 'vue-router'
-import {List, Space, Image, PullRefresh} from 'vant'
+import { List, Space, Image, PullRefresh, Search, Swipe, SwipeItem } from 'vant'
 import Container from '../../components/container/container'
 import http from '../../api'
 import './books.scss'
+import Footer from '../../components/footer/footer'
+import { repeat } from '../../utils'
 
+type name = 'novel' | 'comic'
 export default defineComponent({
   setup() {
     const router = useRouter()
-    const data = ref<any[]>([])
-    const refreshing = ref(false)
-    const loading = ref(false)
-    const finished = ref(false)
-    const currentPage = ref(1)
+    const tab = reactive<any>({
+      name: 'novel' as name,
+      comic: {
+        page: 1,
+        finished: false,
+        refreshing: false,
+        loading: false,
+        data: []
+      },
+      novel: {
+        page: 1,
+        finished: false,
+        refreshing: false,
+        loading: false,
+        data: []
+      }
+    })
+    const tabs = [
+      {
+        id: 'novel',
+        name: '轻小说'
+      },
+      {
+        id: 'comic',
+        name: '漫画'
+      }
+    ]
 
     const getData = (page = 1) => {
-      loading.value = true
+      tab[tab.name].loading = true
       http({
-        url: '/novel/novelList',
+        url: `/books/${tab.name}List`,
         method: 'post',
         data: {
           page: page,
@@ -26,31 +51,29 @@ export default defineComponent({
       })
         .then((res) => {
           if (page === 1) {
-            data.value = res.data.list
+            tab[tab.name].data = repeat(res.data.list, 5)
           } else {
-            data.value.push(...res.data.list)
+            tab[tab.name].data = [...tab[tab.name].data, ...res.data.list]
           }
-          if (data.value.length >= res.data.total) {
-            finished.value = true
+          if (tab[tab.name].data.length >= res.data.total) {
+            tab[tab.name].finished = true
           }
-          currentPage.value = page
+          tab[tab.name].page = page
         })
         .finally(() => {
-          if (refreshing.value) {
-            refreshing.value = false
-          }
-          loading.value = false
+          tab[tab.name].refreshing = false
+          tab[tab.name].loading = false
         })
     }
 
     getData()
 
     const onLoad = () => {
-      getData(currentPage.value + 1)
+      // getData(currentPage + 1)
     }
 
     const refresh = () => {
-      refreshing.value = true
+      tab[tab.name].refreshing = true
       getData()
     }
 
@@ -58,39 +81,63 @@ export default defineComponent({
       return (
         <Container
           class='b-index-container'
+          footer={false}
+          marginTop={90}
+          onClick={(id: string) => {
+            console.log(id)
+            tab.name = id
+            getData()
+          }}
           headerProps={{
-            title: '首页',
+            title: <Search shape="round" placeholder='随便搜点什么'></Search>,
+            back: false,
+            // shadow: false,
+            tab: true,
+            active: tab.name,
+            tabs
           }}>
-          <PullRefresh model-value={refreshing.value} onRefresh={refresh}>
-            <List
-              loading={loading.value}
-              finished={finished.value}
-              finished-text='没有更多了'
-              onLoad={onLoad}
-              immediate-check={false}>
-              <ul class='b-grid-list'>
-                {data.value.map((item, index) => {
-                  return (
-                    <li
-                      key={index}
-                      class='b-grid-list-item'
-                      onClick={() => {
-                        router.push(`/booksDetail?id=${item.id}`)
-                      }}>
-                      <Space direction='vertical' size={0}>
-                       
-                        <Image
-                          src={item.cover}
-                          radius={4}
-                          class='novel-poster'></Image>
-                        <span>{item.name}</span>
-                      </Space>
-                    </li>
-                  )
-                })}
-              </ul>
-            </List>
-          </PullRefresh>
+          <Swipe showIndicators={false} lazyRender onChange={(index) => {
+            tab.name = tabs[index].id as name
+            getData()
+          }}>
+            {
+              tabs.map((tabItem) => {
+                return (
+                  <SwipeItem key={tabItem.id}>
+                    <PullRefresh model-value={tab[tab.name].refreshing} onRefresh={refresh}>
+                    <List
+                      loading={tab[tab.name].loading}
+                      finished={tab[tab.name].finished}
+                      finished-text='没有更多了'
+                      onLoad={onLoad}
+                      immediate-check={false}>
+                      <ul class='b-grid-list'>
+                        {tab[tab.name].data.map((item: any, index: number) => {
+                          return (
+                            <li
+                              key={index}
+                              class='b-grid-list-item'
+                              onClick={() => {
+                                router.push(`/booksDetail?id=${item.id}`)
+                              }}>
+                              <Space direction='vertical' size={0}>
+                                <Image
+                                  src={item.cover}
+                                  radius={4}
+                                  class='novel-poster'></Image>
+                                <span>{item.name}</span>
+                              </Space>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </List>
+                  </PullRefresh>
+                </SwipeItem>
+                )
+              })
+            }
+          </Swipe>
         </Container>
       )
     }

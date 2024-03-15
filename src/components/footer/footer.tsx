@@ -6,10 +6,10 @@ import './footer.scss'
 const icon = [
   {
     router: '/',
-    name: '我的'
+    name: '书籍'
   },
   {
-    router: '/index',
+    router: '/bookcase',
     name: '书架'
 
   },
@@ -25,22 +25,19 @@ export default defineComponent({
 
     return () => {
       return (
-        <Fragment>
-          <ul class="b-footer">
-            {
-              icon.map((item, index) => {
-                return (
-                  <li key={index} class="b-grid-list-item" onClick={() => {
-                    router.push(item.router)
-                  }}>
-                    <span>{item.name}</span>
-                  </li>
-                )
-              })
-            }
-          </ul>
-        </Fragment>
-        
+        <ul class="b-footer">
+          {
+            icon.map((item, index) => {
+              return (
+                <li key={index} class="b-grid-list-item" onClick={() => {
+                  router.push(item.router)
+                }}>
+                  <span>{item.name}</span>
+                </li>
+              )
+            })
+          }
+        </ul>
       )
     }
   }

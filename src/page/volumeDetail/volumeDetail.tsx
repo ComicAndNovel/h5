@@ -1,5 +1,5 @@
-import {defineComponent, reactive, ref} from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import {defineComponent, reactive, ref, watch } from 'vue'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 import { Icon, Space, Image, PullRefresh, Button } from 'vant'
 import Container from '../../components/container/container'
 import { useRequest } from '../../hooks'
@@ -36,6 +36,10 @@ export default defineComponent({
         })
       })
     }
+
+    watch(() => route.query.id, () => {
+      getData()
+    })
 
     getData()
 
@@ -91,7 +95,7 @@ export default defineComponent({
               <section class="books-series">
                 <section>
                   <span>系列</span>
-                  <div class="more">
+                  <div class="more" onClick={() => router.push(`/volumeList?id=${data.value.novelId}`)}>
                     <span>更多</span>
                     <Icon name="arrow" color='#999999'/>
                   </div>

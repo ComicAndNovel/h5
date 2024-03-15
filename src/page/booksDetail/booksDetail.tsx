@@ -1,5 +1,5 @@
 import {defineComponent, reactive, ref} from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 import { Icon, Space, Image, PullRefresh, Tag } from 'vant'
 import Container from '../../components/container/container'
 import http from '../../api'
@@ -16,7 +16,7 @@ export default defineComponent({
 
     const getData = () => {
       useRequest({
-        url: '/novel/detail',
+        url: '/books/detail',
         method: 'get',
         params: {
           id: route.query.id
@@ -41,6 +41,11 @@ export default defineComponent({
       })
     }
 
+    onBeforeRouteUpdate((to, from, next) => {
+      console.log(to, from)
+      next()
+    })
+
     getData()
 
     return () => {
@@ -48,14 +53,13 @@ export default defineComponent({
         <Container
           class='books-detail-container'
           headerProps={{
-            title: data.value.name,
+            title: data.value.name
           }}>
           <PullRefresh onRefresh={getData}>
             <Space direction='vertical' size={10}>
               <Space direction='horizontal' size={10} align="start">
                 <Image src={data.value.cover} radius={5} width={140}></Image>
                 <ul class="books-information">
-                  {/* <li>{data.value.name}</li> */}
                   <li>原名：{data.value.originalName}</li>
                   <li>作者：{
                     data.value.authors?.map((item: { name: string }) => {
@@ -73,7 +77,7 @@ export default defineComponent({
               <section class="books-series">
                 <section>
                   <span>系列</span>
-                  <div class="more">
+                  <div class="more" onClick={() => router.push(`/volumeList?id=${data.value.id}`)}>
                     <span>更多</span>
                     <Icon name="arrow" color='#999999'/>
                   </div>
@@ -100,7 +104,6 @@ export default defineComponent({
                   })}
                 </ul>
               </section>
-              
             </Space>
           </PullRefresh>
         </Container>

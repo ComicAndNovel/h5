@@ -8,6 +8,11 @@ export default [
     component: books
   },
   {
+    path: '/bookcase',
+    name: 'bookcase',
+    component: () => import('../page/bookcase/bookcase')
+  },
+  {
     path: '/booksDetail',
     name: 'booksDetail',
     component: () => import('../page/booksDetail/booksDetail')
@@ -16,6 +21,11 @@ export default [
     path: '/volumeDetail',
     name: 'volumeDetail',
     component: () => import('../page/volumeDetail/volumeDetail')
+  },
+  {
+    path: '/volumeList',
+    name: 'volumeList',
+    component: () => import('../page/volumeList/volumeList')
   },
   {
     path: '/information',
