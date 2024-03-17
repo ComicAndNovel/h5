@@ -1,4 +1,4 @@
-import {defineComponent, ref, reactive, onUpdated, onMounted } from 'vue'
+import {defineComponent, ref, reactive, onUpdated, onMounted, Ref, onUnmounted } from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {Tree} from '../../components/tree/tree'
 import http from '../../api'
@@ -8,6 +8,11 @@ import { Popup, Popover, Icon, Loading, Image, Swipe, SwipeItem } from 'vant'
 
 export default defineComponent({
   setup() {
+    const loadRef = ref();
+    const loadStatus = ref(false);
+    const finishedStatus = ref(false);
+    const loadObserver: Ref<IntersectionObserver> = ref(null!);
+
     const route = useRoute()
     const router = useRouter()
     const html = ref()
@@ -92,6 +97,24 @@ export default defineComponent({
           getComicData()
         break
     }
+
+    onMounted(() => {
+      // 懒加载
+      loadObserver.value = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && !loadStatus.value) {
+          // 新加 data
+          getBookData(data.page + 1)
+        }
+      });
+      const loadDom = document.querySelector(
+        ".novel-loading-dom"
+      ) as HTMLElement;
+      loadObserver.value.observe(loadDom);
+    })
+    onUnmounted(() => {
+      loadObserver.value.disconnect();
+    })
     
     return () => {
       return (
@@ -283,6 +306,14 @@ export default defineComponent({
                             </SwipeItem>
                           )
                         })
+                      }
+                      {
+                        !finishedStatus.value &&
+                        <div
+                          class="novel-loading-dom"
+                          ref={loadRef}
+                        >
+                        </div>
                       }
                       <SwipeItem>
                         {
