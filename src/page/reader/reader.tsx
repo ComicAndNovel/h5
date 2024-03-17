@@ -307,12 +307,14 @@ export default defineComponent({
                           )
                         })
                       }
-                      <div
-                        v-if={!finishedStatus.value}
-                        class="novel-loading-dom"
-                        ref={loadRef}
-                      >
-                      </div>
+                      {
+                        !finishedStatus.value &&
+                        <div
+                          class="novel-loading-dom"
+                          ref={loadRef}
+                        >
+                        </div>
+                      }
                       <SwipeItem>
                         {
                           data.book.current === data.total + 1 ? (
