@@ -29,7 +29,7 @@ export default defineComponent({
           data: {
             page: 1,
             pageSize: 3,
-            novel_id: res.data.novelId
+            books_id: res.data.booksId
           }
         }).then((res: any) => {
           series.value = res.data.list

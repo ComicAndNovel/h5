@@ -32,7 +32,7 @@ export default defineComponent({
         data: {
           page: 1,
           pageSize: 3,
-          novel_id: route.query.id
+          books_id: route.query.id
         }
       }).then((res: any) => {
         // loading.value = res.loading
@@ -68,7 +68,7 @@ export default defineComponent({
                   }</li>
                   <li>语言：{data.value.language?.name}</li>
                   <li>当前状态：{data.value.updateStatus}</li>
-                  <li>当前卷数：{data.value.totalVolume}</li>
+                  <li>总卷数：{data.value.totalVolume}</li>
                 </ul>
               </Space>
               <section class="books-description">

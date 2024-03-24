@@ -24,10 +24,10 @@ export default defineComponent({
         loading.value = res.loading
         data.value = res.data
         useRequest({
-          url: '/novel/detail',
+          url: '/books/detail',
           method: 'get',
           params: {
-            id: res.data.novelId
+            id: res.data.booksId
           }
         }).then((res: any) => {
           novel.value = res.data

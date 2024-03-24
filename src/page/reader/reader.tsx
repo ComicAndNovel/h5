@@ -8,9 +8,9 @@ import { Popup, Popover, Icon, Loading, Image, Swipe, SwipeItem } from 'vant'
 
 export default defineComponent({
   setup() {
-    const loadRef = ref();
-    const loadStatus = ref(false);
-    const finishedStatus = ref(false);
+    const loadRef = ref()
+    const loadStatus = ref(false)
+    const finishedStatus = ref(false)
     const loadObserver: Ref<IntersectionObserver> = ref(null!);
 
     const route = useRoute()
@@ -98,23 +98,23 @@ export default defineComponent({
         break
     }
 
-    onMounted(() => {
-      // 懒加载
-      loadObserver.value = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting && !loadStatus.value) {
-          // 新加 data
-          getBookData(data.page + 1)
-        }
-      });
-      const loadDom = document.querySelector(
-        ".novel-loading-dom"
-      ) as HTMLElement;
-      loadObserver.value.observe(loadDom);
-    })
-    onUnmounted(() => {
-      loadObserver.value.disconnect();
-    })
+    // onMounted(() => {
+    //   // 懒加载
+    //   loadObserver.value = new IntersectionObserver((entries) => {
+    //     const entry = entries[0];
+    //     if (entry.isIntersecting && !loadStatus.value) {
+    //       // 新加 data
+    //       getBookData(data.page + 1)
+    //     }
+    //   });
+    //   const loadDom = document.querySelector(
+    //     ".novel-loading-dom"
+    //   ) as HTMLElement;
+    //   loadObserver.value.observe(loadDom);
+    // })
+    // onUnmounted(() => {
+    //   loadObserver.value.disconnect();
+    // })
     
     return () => {
       return (
@@ -181,9 +181,9 @@ export default defineComponent({
                     case '图书信息':
                       showMore.value = false
                       if (image) {
-                        router.push(`/booksDetail?id=${data.comic.data[0]?.novelVolumeId}`)
+                        router.push(`/booksDetail?id=${data.comic.data[0]?.booksVolumeId}`)
                       } else {
-                        router.push(`/booksDetail?id=${data.book.data[0]?.novelVolumeId}`)
+                        router.push(`/booksDetail?id=${data.book.data[0]?.booksVolumeId}`)
                       }
                       break
                   }
@@ -307,14 +307,14 @@ export default defineComponent({
                           )
                         })
                       }
-                      {
+                      {/* {
                         !finishedStatus.value &&
                         <div
                           class="novel-loading-dom"
                           ref={loadRef}
                         >
                         </div>
-                      }
+                      } */}
                       <SwipeItem>
                         {
                           data.book.current === data.total + 1 ? (

@@ -25,7 +25,7 @@ export default defineComponent({
         data: {
           page: 1,
           pageSize: 20,
-          novel_id: route.query.id
+          books_id: route.query.id
         }
       })
         .then((res: any) => {

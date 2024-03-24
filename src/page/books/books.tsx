@@ -51,7 +51,7 @@ export default defineComponent({
       })
         .then((res) => {
           if (page === 1) {
-            tab[tab.name].data = repeat(res.data.list, 5)
+            tab[tab.name].data = res.data.list
           } else {
             tab[tab.name].data = [...tab[tab.name].data, ...res.data.list]
           }
